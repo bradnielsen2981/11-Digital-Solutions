@@ -12,8 +12,16 @@ alert(message + total);
 */
 
 //              0     1       2
-applearray = ['red','green','yellow']; //list of string
+applearray = ['red','green','yellow', 45]; //list of string
+for (i=0; i < applearray.length; i++)
+{
+    console.log(applearray[i])
+}
 
-console.log(applearray[0]);
-console.log(applearray.length);
+//JavaScript object
+car = { type:"Fiat", model:"500", color:"white" };
+console.log(car.type);
+car.type = "Lamborgini";
+console.log(car.type);
+
 
