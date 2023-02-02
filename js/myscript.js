@@ -25,7 +25,7 @@ console.log(car.type);
 answer = document.getElementById("answer");
 answer.innerHTML = "A web server is a computer program that delivers HTML";
 
-function hideimage()
+function hideimage() 
 {
     image = document.getElementById("myimage");
     image.style.display = "None";
