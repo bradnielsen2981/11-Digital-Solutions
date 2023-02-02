@@ -29,14 +29,17 @@ function logic(playermove,computermove)
     }
 }
 
-while (response != "exit")
-{
+//trigger by event
     computermove = getRandomItem(movearray); //Computer chooses a random move
-    playermove = prompt("What is your move?"); //player chooses a move
+    output = document.getElementById("output");
+    output.innerHTML = "What is your move? ";
+    response = document.getElementById("input").value;
     //comparison of the player move to the computer move
     playerwin = logic(playermove,computermove);
     alert(playerwin);
-    //if playerwins add 1 to score else if computer wins add 1 to computer score else 
-    response = prompt("Do you wish to play again ?");
-}
-alert("Thank you for playing");
+    //if playerwins add 1 to score else if computer wins add 1 to computer score else
+    output.innerHTML = "Do you wish to play again ?"; 
+    response = document.getElementById("input").value;
+
+
+output.innerHTML = "What is your move? "; // WE MIGHT GET AN ERROR!!!
