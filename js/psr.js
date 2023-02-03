@@ -5,6 +5,8 @@ computerscore = 0;
 drawscore = 0;
 response = "";
 movearray = ['paper','scissors','rock'];
+output = document.getElementById("output");
+output.innerHTML = "What is your move? ";
 
 function getRandomItem(arr) {
     randomIndex = Math.floor(Math.random() * arr.length); // get random index value
@@ -17,7 +19,7 @@ function logic(playermove,computermove)
     if (playermove == computermove) 
     {
         return "draw";
-    } else {
+    } else { //SUPER COMPLEX IF STATEMENT
         if ( ((playermove == "paper") && (computermove == "scissors")) || 
         ((playermove == "scissors") && (computermove == "rock")) ||
         ((playermove == "rock") && (computermove == "paper"))  )
@@ -29,21 +31,18 @@ function logic(playermove,computermove)
     }
 }
 
+function play() 
+{
     //new game
     computermove = getRandomItem(movearray); //Computer chooses a random move
-    output = document.getElementById("output");
-    output.innerHTML = "What is your move? ";
 
     //player clicked button
     response = document.getElementById("input").value;
     //comparison of the player move to the computer move
     playerwin = logic(playermove,computermove);
-    alert(playerwin);
 
-    
-    //if playerwins add 1 to score else if computer wins add 1 to computer score else
-    output.innerHTML = "Do you wish to play again ?"; 
-    response = document.getElementById("input").value;
+    output = document.getElementById("output");
+    output.innerHTML = playerwin;
+}
 
-
-output.innerHTML = "What is your move? "; // WE MIGHT GET AN ERROR!!!
+document.getElementById("play").onclick = play;
