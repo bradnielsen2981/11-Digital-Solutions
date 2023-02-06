@@ -37,12 +37,7 @@ function play(playermove)
 {
     //new game
     computermove = getRandomItem(movearray); //Computer chooses a random move
-
-    //player clicked button
-    //playermove = document.getElementById("input").value;
-    //comparison of the player move to the computer move
     playerwin = logic(playermove,computermove);
-
     output = document.getElementById("output");
     output.innerHTML = playerwin;
 
