@@ -37,7 +37,7 @@ function play()
     computermove = getRandomItem(movearray); //Computer chooses a random move
 
     //player clicked button
-    response = document.getElementById("input").value;
+    playermove = document.getElementById("input").value;
     //comparison of the player move to the computer move
     playerwin = logic(playermove,computermove);
 
