@@ -54,7 +54,7 @@ function paper()
 }
 function scissors() 
 { 
-    play('rock'); 
+    play('scissors'); 
 }
 function rock() 
 { 
