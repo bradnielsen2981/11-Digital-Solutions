@@ -14,8 +14,10 @@ function getRandomItem(arr) {
     return item;
 }
 
+//Compare the players move to the computers
 function logic(playermove,computermove)
 {
+
     if (playermove == computermove) 
     {
         return "draw";
@@ -31,7 +33,7 @@ function logic(playermove,computermove)
     }
 }
 
-function play() 
+function play(playermove) 
 {
     //new game
     computermove = getRandomItem(movearray); //Computer chooses a random move
@@ -43,6 +45,9 @@ function play()
 
     output = document.getElementById("output");
     output.innerHTML = playerwin;
+
 }
 
 document.getElementById("play").onclick = play;
+
+document.getElementById("paper").onclick = play('paper');
