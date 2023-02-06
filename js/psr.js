@@ -39,7 +39,7 @@ function play(playermove)
     computermove = getRandomItem(movearray); //Computer chooses a random move
 
     //player clicked button
-    playermove = document.getElementById("input").value;
+    //playermove = document.getElementById("input").value;
     //comparison of the player move to the computer move
     playerwin = logic(playermove,computermove);
 
@@ -48,6 +48,6 @@ function play(playermove)
 
 }
 
-document.getElementById("play").onclick = play;
+//document.getElementById("play").onclick = play;
 
 document.getElementById("paper").onclick = play('paper');
