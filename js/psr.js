@@ -48,6 +48,19 @@ function play(playermove)
 
 }
 
-//document.getElementById("play").onclick = play;
+function paper() 
+{ 
+    play('paper'); 
+}
+function scissors() 
+{ 
+    play('rock'); 
+}
+function rock() 
+{ 
+    play('rock'); 
+}
 
-document.getElementById("paper").onclick = play('paper');
+document.getElementById("paper").onclick = paper;
+document.getElementById("scissors").onclick = scissors;
+document.getElementById("rock").onclick = rock;
