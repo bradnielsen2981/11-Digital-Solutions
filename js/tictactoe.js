@@ -7,7 +7,7 @@ context.lineWidth = 5;
 function draw_square(x,y)
 {
     context.beginPath();
-    context.rect(x, y, 200, 200);
+    context.rect(x*200, y*200, 200, 200);
     context.strokeStyle = 'black';
     context.stroke();
 }
@@ -43,7 +43,7 @@ function draw_board()
     {
         for (col=0; col < board[row].length; col++)
         { 
-            draw_square(col,row)
+            draw_square(col,row);
             /*
                 IF board[row][column] == 1
                     draw_circle(column,row)
