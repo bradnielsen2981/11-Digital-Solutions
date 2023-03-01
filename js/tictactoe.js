@@ -41,19 +41,17 @@ function draw_board()
 {
     for (row=0; row < board.length; row++)  
     {
-        console.log(board[row]);
-        /*
-            FOR column = 0 to 2 
-                draw_square(column,row)
-                OUTPUT(board[row][column])
+        for (col=0; col < board[row].length; col++)
+        { 
+            draw_square(col,row)
+            /*
                 IF board[row][column] == 1
                     draw_circle(column,row)
                 ELSE IF board[row][column] == 2
                     draw_cross(column, row)
                 END IF
-            END FOR
-        END FOR
-        */
+            */
+        }
     }
 }
 
