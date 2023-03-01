@@ -14,6 +14,8 @@ function draw_square(x,y)
 
 function draw_circle(x,y)
 {
+    x = x*200;
+    y = y*200;
     context.beginPath();
     context.arc(x+100, y+100, 75, 0, 2*Math.PI);
     context.strokeStyle = 'green';
@@ -22,6 +24,8 @@ function draw_circle(x,y)
 
 function draw_cross(x,y)
 {
+    x = x*200;
+    y = y*200;
     context.strokeStyle = 'red';
     centerX = x + 100;
     centerY = y + 100;
@@ -44,13 +48,14 @@ function draw_board()
         for (col=0; col < board[row].length; col++)
         { 
             draw_square(col,row);
-            /*
-                IF board[row][column] == 1
-                    draw_circle(column,row)
-                ELSE IF board[row][column] == 2
-                    draw_cross(column, row)
-                END IF
-            */
+            if (board[row][col] == 1)
+            {
+                draw_circle(col,row);
+            }
+            else if (board[row][col] == 2)
+            {
+                draw_cross(col,row);
+            }
         }
     }
 }
