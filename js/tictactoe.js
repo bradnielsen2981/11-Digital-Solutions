@@ -60,5 +60,72 @@ function draw_board()
     }
 }
 
-board = [[0,1,0],[0,2,1],[1,0,0]];
+board = [[0,0,0],
+         [0,0,0],
+         [0,0,0]];
 draw_board(board);
+player = 0;
+
+// Add a click event listener to the canvas
+canvas.onclick = function(event) 
+{
+    // Get the mouse position relative to the canvas
+    rect = canvas.getBoundingClientRect();
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
+    
+    x = Math.trunc(mouseX / 200);
+    y = Math.trunc(mouseY / 200);
+
+    if (player == 0) //player 1
+    {
+        draw_circle(x,y);
+        board[y][x] = 1;
+    } else if (player == 1) //player 2
+    {
+        draw_cross(x,y);
+        board[y][x] = 2;
+    }
+    player = (player + 1)%2; //get remainder after division
+
+    victory(); 
+}
+
+//PSEUDOCODE FIRST - BOARD - ROWS, COLUMNS, DIAGONALS
+function victory()
+{
+    columnsum = [1,1,1];
+    for (row=0; row < board.length; row++)
+    {
+        rowsum = 1;
+        for (col=0; col<board[row].length; col++)
+        {
+            rowsum = rowsum*board[row][col];
+            columnsum[col] = columnsum[col] * board[row][col];
+        }
+        if (rowsum == 1)
+        {
+            alert("Player 1 wins");
+            return 1; //exit the function
+        } else if (rowsum == 8)
+        { 
+            alert("Player 2 wins");
+            return 2; //exit the function
+        }
+    }
+    for (i=0; i<columnsum.length; i++)
+    {
+        if (columnsum[i] == 1)
+        {
+            alert("Player 1 wins");
+            return 1;
+        }
+        else if (columnsum[i] == 8)
+        {
+            alert("Player 2 wins")
+            return 1;
+        }
+    }
+    return 0
+}
+
