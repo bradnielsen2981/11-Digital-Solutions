@@ -3,6 +3,7 @@ alert("Loaded");
 canvas = document.getElementById('board');
 context = canvas.getContext('2d');
 context.lineWidth = 5;
+turns = 1
 
 function draw_square(x,y)
 {
@@ -88,7 +89,19 @@ canvas.onclick = function(event)
     }
     player = (player + 1)%2; //get remainder after division
 
-    victory(); 
+    v = victory(); 
+    if (v == 1)
+    {
+        alert("Player 1 wins!");
+    } else if (v == 2)
+    {
+        alert("Player 2 wins!");
+    } else if (v == 0 && turns == 9)
+    {
+        alert("Draw!")
+    } 
+
+    turns = turns + 1;
 }
 
 //PSEUDOCODE FIRST - BOARD - ROWS, COLUMNS, DIAGONALS
@@ -105,11 +118,9 @@ function victory()
         }
         if (rowsum == 1)
         {
-            alert("Player 1 wins");
             return 1; //exit the function
         } else if (rowsum == 8)
         { 
-            alert("Player 2 wins");
             return 2; //exit the function
         }
     }
@@ -117,15 +128,24 @@ function victory()
     {
         if (columnsum[i] == 1)
         {
-            alert("Player 1 wins");
             return 1;
         }
         else if (columnsum[i] == 8)
         {
-            alert("Player 2 wins")
             return 1;
         }
     }
+
+    diagonal2 = board[2][0]*board[1][1]*board[0][2];
+    diagonal1 = board[0][0]*board[1][1]*board[2][2];
+    if (diagonal1 == 1 || diagonal2 == 1)
+    {
+        return 1
+    } else if (diagonal1 == 8 || diagonal2 == 8)
+    {
+        return 2
+    }
+
     return 0
 }
 
