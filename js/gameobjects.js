@@ -1,15 +1,5 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mousemove", onMouseMove);
-canvas.addEventListener("mouseup", onMouseUp);
-exit = false;
-board = [[0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0]];
 
 //--------------------------------------------------------------------------
 //A CLASS is a variable type that contains OTHER variables and functions (WHEN IT IS CREATED, ITS CALLED AN OBJECT!!!)
@@ -58,8 +48,8 @@ class Sprite
     {
       if (this.isDragging)
       {
-        sprite.x = x; //align sprite after mouse up
-        sprite.y = y; 
+        sprite.x = x; //align sprite after mouse up - comment out if you want precise positioning
+        sprite.y = y; //align sprite after mouse up - comment out if you want precise positioning
         this.isDragging = false;
       }
     }
@@ -67,10 +57,10 @@ class Sprite
 }
 
 //draw the square
-function draw_square(x,y,side)
+function draw_square(x,y,width,height)
 {
     ctx.beginPath();
-    ctx.rect(x*side, y*side, side, side);
+    ctx.rect(x*width, y*height, width, height);
     ctx.strokeStyle = 'black';
     ctx.stroke();
 }
@@ -82,7 +72,7 @@ function draw_board()
     {
         for (col=0; col < board[row].length; col++)
         { 
-            draw_square(col,row,100);
+            draw_square(col,row,squarewidth,squareheight);
         }
     }
 }
@@ -103,18 +93,18 @@ function onMouseMove(event) {
 
 function onMouseUp(event) {
   //align with board
-  squarewidth = (canvas.height/board.length);
   column = Math.trunc(event.offsetX/squarewidth);
- d row = Math.trunc(event.offsetY/squarewidth);
-  alert("ROW: " + String(row) + " COLUMN: " + String(column));
+  row = Math.trunc(event.offsetY/squareheight);
+
+  console.log("ROW: " + String(row) + " COLUMN: " + String(column));
 
   for (sprite of SpriteList) {
-    sprite.mouseUp(column*squarewidth,row*squarewidth);
+    sprite.mouseUp(column*squarewidth,row*squareheight);
   }
 }
 
 //-----------------------------------------------------------------------------
-//GLOBAL GAME ANIMATION FUNCTION - Drag and drop needs canvas cleared each frame
+//GLOBAL GAME ANIMATION FUNCTION - Drag and drop needs canvas to be cleared each frame
 function game() {
     if (exit == true) { return; } //get game loop
 
@@ -125,23 +115,36 @@ function game() {
       sprite.update(); //run any sprite logic
     }
 
-    for (sprite of SpriteList) //draw all sprites
+    for (sprite of SpriteList) //draw all sprites in the the Sprite List
     {
       sprite.draw(ctx);
     }
     requestAnimationFrame(game); //calls itself - known as a recursive function
 }
 
-//---------------------------------------------------------------------------
+//RUN GAME-------------------------------------------------------
+canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mousemove", onMouseMove);
+canvas.addEventListener("mouseup", onMouseUp);
+exit = false;
+board = [[0,0,0,0,0,0],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0],
+        [0,0,0,0,0,0]];
+squareheight = canvas.height/board.length;
+squarewidth = canvas.width/board[0].length
 
 //GAME SET UP
-SpriteList = []; //all sprites get added to SpriteList
+SpriteList = []; //all sprites get added to SpriteList - if you want to do more drawing, create more sprites and add them to the list.
+
 for (i=0; i<10; i++)
 {
-    let x = Math.floor(Math.random()*600);
-    let y = Math.floor(Math.random()*600);
-    mySprite = new Sprite(x, y, 50, 50, "images/pig.png", ctx.getBoundingClientRect);
-    SpriteList.push(mySprite);
+    let x = Math.floor(Math.random()*board[0].length);
+    let y = Math.floor(Math.random()*board.length);
+    mySprite = new Sprite(x*squarewidth, y*squareheight, squarewidth, squareheight, "images/pig.png", ctx.getBoundingClientRect); //Create a new Sprite
+    SpriteList.push(mySprite); //Add the new Sprite to the SpriteList.
 }
 
 game();
