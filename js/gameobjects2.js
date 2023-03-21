@@ -6,6 +6,7 @@ canvas.addEventListener("mouseup", onMouseUp);
 exit = false;
 
 //--------------------------------------------------------------------------
+//A CLASS is a variable type that contains other variables and functions (WHEN IT IS CREATED, ITS CALLED AN OBJECT)
 class Sprite
 {
     constructor(x, y, width, height, image, rect) {
@@ -59,7 +60,7 @@ class Sprite
 
 //-------------------------------------------------------------------------
 
-//EVENT HANDLING - check with all sprites
+//GLOBAL EVENT HANDLING - check with all sprites
 function onMouseDown(event) {
   for (sprite of SpriteList) {
     sprite.mouseDown(event.offsetX,event.offsetY);
@@ -80,17 +81,25 @@ function onMouseUp(event) {
 
 //-----------------------------------------------------------------------------
 
-//animation
-function animate() {
-    if (exit == true) { return; }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+//GLOBAL ANIMATION FUNCTION
+function game() {
+    if (exit == true) { return; } //get game loop
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //clear screen
+
+    for (sprite of SpriteList) //draw all sprites
+    {
+      sprite.update(); //run any sprite logic
+    }
+
     for (sprite of SpriteList) //draw all sprites
     {
       sprite.draw(ctx);
     }
-    requestAnimationFrame(animate);
+    requestAnimationFrame(game); //calls itself - known as a recursive function
 }
 
+//---------------------------------------------------------------------------
 
 //GAME SET UP
 SpriteList = []; //all sprites get added to SpriteList
@@ -102,4 +111,4 @@ for (i=0; i<10; i++)
     SpriteList.push(mySprite);
 }
 
-animate();
+game();
