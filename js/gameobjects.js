@@ -87,9 +87,7 @@ function draw_board()
     }
 }
 
-
 //-------------------------------------------------------------------------
-
 //GLOBAL EVENT HANDLING - check with all sprites
 function onMouseDown(event) {
   for (sprite of SpriteList) {
@@ -107,7 +105,7 @@ function onMouseUp(event) {
   //align with board
   squarewidth = (canvas.height/board.length);
   column = Math.trunc(event.offsetX/squarewidth);
-  row = Math.trunc(event.offsetY/squarewidth);
+ d row = Math.trunc(event.offsetY/squarewidth);
   alert("ROW: " + String(row) + " COLUMN: " + String(column));
 
   for (sprite of SpriteList) {
@@ -116,7 +114,6 @@ function onMouseUp(event) {
 }
 
 //-----------------------------------------------------------------------------
-
 //GLOBAL GAME ANIMATION FUNCTION - Drag and drop needs canvas cleared each frame
 function game() {
     if (exit == true) { return; } //get game loop
