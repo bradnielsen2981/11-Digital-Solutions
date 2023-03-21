@@ -1,79 +1,106 @@
-alert("Loaded");
+alert("NEW");
 
-
-class GameObject {
-    constructor(x, y, sprite) {
-      this.x = x;
-      this.y = y;
-      this.sprite = sprite;
-    }
-  
-    draw(ctx) {
-      // Draw the sprite on the canvas at the object's position
-      console.log("DRAW");
-      ctx.drawImage(this.sprite, this.x, this.y);
-    }
-
-    
-    update() {
-      this.x = this.x + 1;
-      this.y = this.y + 1;
-    }
-
+//A Draggable object
+class Draggable {
+  constructor(canvas, image) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.image = image;
+    this.isDragging = false;
+    this.rect = this.canvas.getBoundingClientRect();
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
+    this.canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
+    this.canvas.addEventListener('mouseup', this.handleMouseUp.bind(this));
+    this.draw();
   }
 
-class ClickableObject extends GameObject {
-    constructor(x, y, sprite) {
-      console.log("Created");
-      super(x, y, sprite);
-    }
-  
-    handleClick(mouseX, mouseY) {
-      // Check if the mouse click was inside the sprite
-      if (mouseX > this.x && mouseX < this.x + this.sprite.width &&
-          mouseY > this.y && mouseY < this.y + this.sprite.height) {
-        alert('Object clicked!');
-      }
-    }
-  
-    bindClickEvent(canvas) {
-      // Bind a click event listener to the canvas for the object
-      canvas.addEventListener('click', (event) => {
-        // Get the mouse position relative to the canvas
-        const rect = canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
-  
-        // Call the handleClick method with the mouse position
-        this.handleClick(mouseX, mouseY);
-      });
-      
-    }
-
+  draw() {
+    this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
-  // Load the sprite image
-const sprite = new Image();
-sprite.src = 'images/pig.png';
+  handleMouseDown(event) {
+    this.mouseX = event.clientX - this.rect.left; //get mouse coordinates
+    this.mouseY = event.clientY - this.rect.top;
+    alert(this.mouseX);
 
-// Create a game object instance with the sprite
-//const gameObject = new GameObject(130, 100, sprite);
+    if (this.mouseX > this.x && this.mouseX < this.x + this.width &&
+      this.mouseY > this.y && this.mouseY < this.y + this.height) {
+        this.isDragging = true;
+        alert("DRAGGABLE!!!!");
+    }
+    this.canvas.style.cursor = "grabbing";
+  }
 
-// Create a clickable game object instance with the sprite
-const clickableObject = new ClickableObject(130, 100, sprite);
+  handleMouseMove(event) {
+    if (this.isDragging) {
+      const deltaX = event.clientX - this.rect.left - this.mouseX;
+      const deltaY = event.clientY - this.rect.top - this.mouseY;
+      this.x += deltaX;
+      this.y += deltaY;
+      this.mouseX = event.clientX - this.rect.left;
+      this.mouseY = event.clientY - this.rect.top;
+      //this.draw();
+    }
+  }
 
-// Bind the click event to the canvas element
-const canvas = document.getElementById('myCanvas');
-clickableObject.bindClickEvent(canvas);
-ctx = canvas.getContext('2d');
+  handleMouseUp() {
+    this.isDragging = false;
+    this.canvas.style.cursor = "grab";
+  }
 
-//start game loop
-setInterval(gameloop, 10);
+  get x() {
+    return this._x || 0;
+  }
 
-function gameloop()
-{
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  clickableObject.draw(ctx);
-  clickableObject.update();
+  set x(value) {
+    this._x = value;
+    //this.draw();
+  }
+
+  get y() {
+    return this._y || 0;
+  }
+
+  set y(value) {
+    this._y = value;
+    //this.draw();
+  }
+
+  get width() {
+    return this._width || this.image.width;
+  }
+
+  set width(value) {
+    this._width = value;
+    //this.draw();
+  }
+
+  get height() {
+    return this._height || this.image.height;
+  }
+
+  set height(value) {
+    this._height = value;
+    //this.draw();
+  }
 }
+
+// Usage
+const canvas = document.getElementById('myCanvas');
+
+const draggables = [];
+
+
+const image = new Image();
+image.src = 'images/pig.png';
+image.onload = function() {
+    const draggable = new Draggable(canvas, image);
+    draggable.x = Math.random() * canvas.width;
+    draggable.y = Math.random() * canvas.height;
+    draggable.width = Math.floor(Math.random() * 100) + 50;
+    draggable.height = Math.floor(Math.random() * 100) + 50;
+  };
+
 
