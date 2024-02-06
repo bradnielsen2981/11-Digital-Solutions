@@ -63,6 +63,16 @@ function sprite_collision_with_spritelist(sprite, spritelist)
   return null;
 }
 
+//reflect the sprite off the boundary
+function reflect_sprite_off_boundary(sprite, canvas) {
+  if (sprite.x < 0 || sprite.x + sprite.width > canvas.width) {
+    sprite.hspeed *= -1; // Reverse hspeed if outside horizontally
+  }
+  if (sprite.y < 0 || sprite.y + sprite.height > canvas.height) {
+    sprite.vspeed *= -1; // Reverse vspeed if outside vertically
+  }
+}
+
 // Check if any part of the sprite is outside the CANVAS boundaries
 function detect_if_sprite_outside_CANVAS(sprite) {
   
@@ -191,6 +201,22 @@ function get_direction_vector_to_sprite(sprite, othersprite)
   const dy = othersprite.y - sprite.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
   return { x: dx/distance, y: dy/distance }; //returns a vector object vector.x, vector.y
+}
+
+//get the normalised vector e.g a vector with a distance of 1
+function normalize_vector(h,v) {
+  const magnitude = Math.sqrt(h*h + v*v);
+  if (magnitude !== 0) {
+    return {
+      x: h / magnitude,
+      y: v / magnitude
+    };
+  } else {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
 }
 
 //removes an item from an array - used for removing sprites from sprite list

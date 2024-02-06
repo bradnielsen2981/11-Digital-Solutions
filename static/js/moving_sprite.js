@@ -13,16 +13,30 @@ class Moving_Sprite
       this.offsetY = 0; 
       this.hspeed = 0;
       this.vspeed = 0;
+      this.speed = 5;
     }
 
     //draw the image - called every frame
     draw() {
+
+      /* to rotate the sprite
+          ctx.save(); // Save the current transformation matrix
+      ctx.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the sprite
+      ctx.rotate(this.angle); // Rotate by the current angle
+      ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the image centered at (0, 0)
+      ctx.restore(); // Restore the previous transformation matrix
+      */
+
+
       CTX.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
     //do any logic - called every frame
     update()
     {
+      //bounce off boundary
+      reflect_sprite_off_boundary(this, CANVAS)
+
       this.x += this.hspeed;
       this.y += this.vspeed;
 
@@ -34,6 +48,15 @@ class Moving_Sprite
         //SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
         //SPRITELIST.remove(othersprite);
       }
+    }
+
+    set_random_vector() {
+      // Scale speed components based on delta_time
+      let h = Math.random()*2-1;
+      let v = Math.random()*2-1;
+      let vector = normalize_vector(h,v);
+      this.hspeed = vector.x * this.speed * DELTA_TIME * 10;
+      this.vspeed = vector.y * this.speed * DELTA_TIME * 10;
     }
 
     //on mouse down
@@ -79,7 +102,7 @@ class Moving_Sprite
 
     destroy()
     {
-      SPRITELIST.remove(this);
+      SPRITE_LIST.remove(this);
       //this = null; //why does this not work??
     }
 }
