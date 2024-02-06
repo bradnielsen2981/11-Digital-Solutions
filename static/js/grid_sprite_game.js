@@ -30,7 +30,7 @@ CANVAS = document.getElementById("mycanvas");
 CANVAS.focus()
 CTX = CANVAS.getContext("2d");
 CANVAS.addEventListener("mousedown", on_mouse_down); //attach events from globals
-CANVAS.addEventListener("mousemove", on_mouse_down); //attach events from globals
+CANVAS.addEventListener("mousemove", on_mouse_move); //attach events from globals
 CANVAS.addEventListener("mouseup", on_mouse_up); //attach events from globals
 CANVAS.addEventListener("keydown", on_key_down); //attach events from globals
 

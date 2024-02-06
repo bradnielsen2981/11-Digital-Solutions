@@ -1,61 +1,31 @@
-//GAME FUNCTIONS-------------------------------------------------------
-function draw_square(x,y,width,height)
-{
-    CTX.beginPath();
-    CTX.rect(x*width, y*height, width, height);
-    CTX.strokeStyle = 'black';
-    CTX.stroke();
-}
+//create a random sprite
 
-//GAME EVENTS -------------------------------------------------------
-//draw the GRID
-function draw_grid()
+function create_moving_sprite()
 {
-    for (row=0; row < GRID.length; row++)  
+  let posx = Math.random()*CANVAS.width;
+    let posy = Math.random()*CANVAS.height;
+
+    while (true)
     {
-        for (col=0; col < GRID[row].length; col++)
-        { 
-            draw_square(col,row,SQUARE_WIDTH,SQUARE_HEIGHT); //draws a black square
+      let spritefound = false;
+      for (sprite in SPRITE_LIST)
+      {
+        if (sprite_collision_with_point(sprite, posx, posy))
+        {
+          spritefound = true;
         }
+      }
+      if (spritefound == false)
+      {
+        break;
+      }
     }
+
+    mySprite = new Moving_Sprite(posx,posy,100,100,"static/images/pig.png"); 
+    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
 }
 
-//on mouse down on canvas
-function onMouseDown(event) {
-  for (sprite of SPRITE_LIST) {
-    sprite.mouseDown(event.offsetX,event.offsetY);
-  }
-}
 
-//on mouse move event on canvas
-function onMouseMove(event) {
-  for (sprite of SPRITE_LIST) {
-    sprite.mouseMove(event.offsetX,event.offsetY);
-  }
-}
-
-//on mouse down event on canvas
-function onMouseUp(event) {
-  //align with GRID
-  column = Math.trunc(event.offsetX/SQUARE_WIDTH);
-  row = Math.trunc(event.offsetY/SQUARE_HEIGHT);
-
-  console.log("ROW: " + String(row) + " COLUMN: " + String(column));
-
-  for (sprite of SPRITE_LIST) {
-    sprite.mouseUp(event.offsetX,event.offsetY);
-  }
-
-  console.log(GRID);
-}
-
-//on key down event during game
-function onKeyDown(event) {
-  for (sprite of SPRITE_LIST) {
-    letter = String.fromCharCode(event.keyCode);
-    sprite.keydown(event.keyCode, letter);
-  } 
-}
 
 //GAME LOOP----------------------------------------------------------
 function game_loop(currentTime) {
@@ -63,10 +33,17 @@ function game_loop(currentTime) {
 
     DELTA_TIME = (currentTime - LAST_FRAME_TIME) / 1000;
     LAST_FRAME_TIME = currentTime;
+    let TIME = Math.round((currentTime - STARTTIME) / 1000) * 1000; // Round to nearest second in milliseconds
+    if (TIME%2000 === 0) {
+      if (SPRITE_LIST.length < 10)
+      {
+        create_moving_sprite();
+      }
+    }
 
-    CTX.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+    CTX.clearRect(0, 0, CANVAS.width, CANVAS.height); //clear canvas
 
-    draw_GRID(); //redraw the GRID
+    //draw_background()
     for (sprite of SPRITE_LIST) //draw all sprites
     {
       sprite.update(); //run any sprite logic
@@ -82,41 +59,15 @@ function game_loop(currentTime) {
 }
 
 //SETUP THE GAME -----------------------------------------------------
-canvas = document.getElementById("mycanvas");
-canvas.focus()
-CTX = canvas.getContext("2d");
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mousemove", onMouseMove);
-canvas.addEventListener("mouseup", onMouseUp);
-canvas.addEventListener("keydown", onKeyDown);
+CANVAS= document.getElementById("mycanvas");
+CANVAS.focus()
+CTX = CANVAS.getContext("2d");
+CANVAS.addEventListener("mousedown", on_mouse_down);
+CANVAS.addEventListener("mousemove", on_mouse_move);
+CANVAS.addEventListener("mouseup", on_mouse_up);
+CANVAS.addEventListener("keydown", on_key_down);
 
-TIME = 0
-EXIT = false;
-GRID = [[0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0]];
-
-//Create all the sprites
-for (i=0; i<10; i++)
-{
-    let x = Math.floor(Math.random()*GRID[0].length);
-    let y = Math.floor(Math.random()*GRID.length);
-    while (GRID[y][x] == 1)
-    {
-      x = Math.floor(Math.random()*GRID[0].length);
-      y = Math.floor(Math.random()*GRID.length);
-    }
-
-    mySprite = new Sprite(x*SQUARE_WIDTH, y*SQUARE_HEIGHT, SQUARE_WIDTH, SQUARE_HEIGHT, "images/pig.png", CTX.getBoundingClientRect); //Create a new Sprite
-    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
-
-    //update GRID
-    GRID[y][x] = 1;
-}
-
-console.log(GRID);
+STARTTIME = new Date();
+LAST_FRAME_TIME = STARTTIME;
 
 game_loop(); //Start game loop

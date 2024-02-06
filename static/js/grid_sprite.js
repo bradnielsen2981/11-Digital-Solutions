@@ -31,11 +31,10 @@
         if (!this.isDragging)
         { 
           this.isDragging = true;
-
           //clear column and row
-          pos = get_GRID_row_column(this.x,this.y);
-          column = pos.column;
-          row = pos.column;
+          let pos = get_GRID_row_column(x,y);
+          let column = pos.column;
+          let row = pos.row;
           GRID[row][column] = 0;
         }
         this.offsetX = x - this.x;
@@ -46,6 +45,7 @@
     on_mouse_move(x,y) //on moving the mouse
     {
       if (this.isDragging) {
+        
         this.x = x - this.offsetX;
         this.y = y - this.offsetY;
       }
@@ -58,13 +58,14 @@
         this.isDragging = false;
         
         //get the column and row, move the sprite to the square
-        pos = get_GRID_row_column(this.x, this.y);
-        column = pos.column;
-        row = pos.column;
+        let pos = get_GRID_row_column(x,y);
+        let column = pos.column;
+        let row = pos.row;
         move_sprite_to_square(column, row, this);
 
         //update grid with sprite value
         GRID[row][column] = this.value;
+        console.log(GRID);
       }
     }
 

@@ -5,7 +5,8 @@ GRID = []; //if there is a GRID in the game
 CANVAS = null;
 CTX = null; //the context for drawing
 EXIT = false; //when ready to exit game
-LAST_FRAME_TIME = 0; //last system clocktime recorded at the end of last frame
+STARTTIME = 0;
+LAST_FRAME_TIME = 0;
 DELTA_TIME = 0; //the elapsed time between frames
 TIME = 0; //actual game time
 PLAYER1_HEALTH = 0; //health of player
@@ -76,8 +77,8 @@ function detect_if_sprite_outside_CANVAS(sprite) {
 //align the sprite to GRID square
 function align_sprite_to_square(sprite) {
   // Calculate the size of a GRID square
-  const squareWidth = CANVAS.width / GRID.columns;
-  const squareHeight = CANVAS.height / GRID.rows;
+  const squareWidth = CANVAS.width / GRID[0].length;;
+  const squareHeight = CANVAS.height / GRID.length;
 
   // Calculate the GRID square index for the sprite's position
   const GRIDColumn = Math.floor(sprite.x / squareWidth);
@@ -110,23 +111,25 @@ function get_GRID_x_y(column, row) {
 
 //get column and row based on the x and y
 function get_GRID_row_column(x, y) {
+
   // Calculate the size of a GRID square
-  const squareWidth = CANVAS.width / GRID.columns;
-  const squareHeight = CANVAS.height / GRID.rows;
+  const squareWidth = CANVAS.width / GRID[0].length;
+  const squareHeight = CANVAS.height / GRID.length;
 
   // Calculate the row and column based on the x and y coordinates
   const column = Math.floor(x / squareWidth);
   const row = Math.floor(y / squareHeight);
 
   // Return the row and column as an object
-  return { column, row };
+  let pos = { column, row };
+  return pos;
 }
 
 //move sprite to square
 function move_sprite_to_square(column, row, sprite) {
   // Calculate the size of a GRID square
-  const squareWidth = CANVAS.width / GRID.columns;
-  const squareHeight = CANVAS.height / GRID.rows;
+  const squareWidth = CANVAS.width / GRID[0].length;
+  const squareHeight = CANVAS.height / GRID.length;
 
   // Calculate the position for the specified column and row
   const x = column*squareWidth;
@@ -143,8 +146,8 @@ function is_sprite_in_centre_of_square(sprite) {
   const spriteCenterY = sprite.y + sprite.height / 2;
 
   // Calculate the size of a GRID square
-  const squareWidth = CANVAS.width / GRID.columns;
-  const squareHeight = CANVAS.height / GRID.rows;
+  const squareWidth = CANVAS.width / GRID[0].length;
+  const squareHeight = CANVAS.height / GRID.length;
 
   // Calculate the GRID square index for the sprite's center
   const GRIDColumn = Math.floor(spriteCenterX / squareWidth);
