@@ -41,23 +41,18 @@ GRID = [[0,0,0],
         [0,0,0]];
 
 //Create all the sprites
-/*
+
 for (i=0; i<10; i++)
 {
     let column = Math.floor(Math.random()*GRID[0].length);
     let row = Math.floor(Math.random()*GRID.length);
-    while (GRID[row][column] == 1)
-    {
-      columns = Math.floor(Math.random()*GRID[0].length);
-      row = Math.floor(Math.random()*GRID.length);
-    }
-
-    //mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
-    //SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
+    
+    mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
+    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
 
     //update GRID
-    //GRID[row][column] = 1;
-} */
+    GRID[row][column] = 1;
+} 
 
 console.log(GRID);
 
