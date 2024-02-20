@@ -10,7 +10,7 @@ function game_loop(currentTime) {
 
     CTX.clearRect(0, 0, CANVAS.width, CANVAS.height); //clear canvas
 
-    draw_grid(); //redraw the GRID
+    draw_GRID(); //redraw the GRID
     for (sprite of SPRITE_LIST) //draw all sprites
     {
       sprite.update(); //run any sprite logic
@@ -36,14 +36,12 @@ CANVAS.addEventListener("keydown", on_key_down); //attach events from globals
 
 TIME = 0
 EXIT = false;
-GRID = [[0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0],
-        [0,0,0,0,0,0]];
+GRID = [[0,0,0],
+        [0,0,0],
+        [0,0,0]];
 
 //Create all the sprites
+/*
 for (i=0; i<10; i++)
 {
     let column = Math.floor(Math.random()*GRID[0].length);
@@ -54,12 +52,12 @@ for (i=0; i<10; i++)
       row = Math.floor(Math.random()*GRID.length);
     }
 
-    mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
-    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
+    //mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
+    //SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
 
     //update GRID
-    GRID[row][column] = 1;
-}
+    //GRID[row][column] = 1;
+} */
 
 console.log(GRID);
 

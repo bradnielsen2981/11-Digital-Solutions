@@ -9,33 +9,26 @@ class Moving_Sprite
       this.height = height;
       this.image = new Image();
       this.image.src = image;
-      this.offsetX = 0;
-      this.offsetY = 0; 
       this.hspeed = 0;
       this.vspeed = 0;
+      this.angle = 0;
       this.speed = 5;
+      this.margin = -2;
     }
 
-    //draw the image - called every frame
+    //draw the image - called every frame and rotate
     draw() {
-
-      /* to rotate the sprite
-          ctx.save(); // Save the current transformation matrix
-      ctx.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the sprite
-      ctx.rotate(this.angle); // Rotate by the current angle
-      ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the image centered at (0, 0)
-      ctx.restore(); // Restore the previous transformation matrix
-      */
-
-
-      CTX.drawImage(this.image, this.x, this.y, this.width, this.height);
+      CTX.save(); // Save the current transformation matrix
+      CTX.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the sprite
+      CTX.rotate(this.angle); // Rotate by the current angle
+      CTX.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the image centered at (0, 0)
+      CTX.restore(); // Restore the previous transformation matrix
     }
 
     //do any logic - called every frame
     update()
     {
-      //bounce off boundary
-      reflect_sprite_off_boundary(this, CANVAS)
+      //this.angle = this.angle + 0.05;
 
       this.x += this.hspeed;
       this.y += this.vspeed;
@@ -48,15 +41,6 @@ class Moving_Sprite
         //SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
         //SPRITELIST.remove(othersprite);
       }
-    }
-
-    set_random_vector() {
-      // Scale speed components based on delta_time
-      let h = Math.random()*2-1;
-      let v = Math.random()*2-1;
-      let vector = normalize_vector(h,v);
-      this.hspeed = vector.x * this.speed * DELTA_TIME * 10;
-      this.vspeed = vector.y * this.speed * DELTA_TIME * 10;
     }
 
     //on mouse down
@@ -87,7 +71,7 @@ class Moving_Sprite
     }
 
     //on key down
-    keydown(keycode, letter) //on key down
+    on_key_down(keycode, letter) //on key down
     {
       if (keycode == 32) { //key code for special keys
         console.log("Space was pressed");

@@ -1,6 +1,7 @@
 //GLOBAL GAME VARIABLES--------------------------------------------
 GAME_STATUS = "Ready"
 SPRITE_LIST = []; //global spritelist
+BULLET_LIST = []; //global bulletlist - if there is a bullet game
 GRID = []; //if there is a GRID in the game
 CANVAS = null;
 CTX = null; //the context for drawing
@@ -14,6 +15,8 @@ PLAYER2_HEALTH = 0; //health of player
 PLAYER1_SCORE = 0;
 PLAYER2_SCORE = 0; 
 TURN = 1;
+MOUSEX = 0;
+MOUSEY = 0;
 
 //GLOBAL GAME FUNCTIONS--------------------------------------------
 //detects if the sprite has collided with a point e.g. is the mouse cursor on the sprite
@@ -31,27 +34,37 @@ function sprite_collision_with_point(sprite, x, y)
 
 
 // Check for the collision between two sprites
-function sprite_collision_with_sprite(sprite1, sprite2, margin) {
+function sprite_collision_with_sprite(sprite1, sprite2) {
   // Expand or shrink the collision area by the margin
   const expandedSprite1 = {
-    x: sprite1.x - margin,
-    y: sprite1.y - margin,
-    width: sprite1.width + margin * 2,
-    height: sprite1.height + margin * 2,
+    x: sprite1.x - sprite1.margin,
+    y: sprite1.y - sprite1.margin,
+    width: sprite1.width + sprite1.margin * 2,
+    height: sprite1.height + sprite1.margin * 2,
+  };
+
+  const expandedSprite2 = {
+    x: sprite2.x - sprite2.margin,
+    y: sprite2.y - sprite2.margin,
+    width: sprite2.width + sprite2.margin * 2,
+    height: sprite2.height + sprite2.margin * 2,
   };
 
   // Check for collision between the expanded sprite1 and sprite2
-  return (
-    expandedSprite1.x < sprite2.x + sprite2.width &&
-    expandedSprite1.x + expandedSprite1.width > sprite2.x &&
-    expandedSprite1.y < sprite2.y + sprite2.height &&
-    expandedSprite1.y + expandedSprite1.height > sprite2.y
+  result = (
+    expandedSprite1.x <= expandedSprite2.x + expandedSprite2.width &&
+    expandedSprite1.x + expandedSprite1.width >= expandedSprite2.x &&
+    expandedSprite1.y <= expandedSprite2.y + expandedSprite2.height &&
+    expandedSprite1.y + expandedSprite1.height >= expandedSprite2.y
   );
+
+  return result;
 }
 
 //detect a collision between a sprite and a group. Return the other sprite.
 function sprite_collision_with_spritelist(sprite, spritelist)
 {
+  margin = 0
   for (let i = 0; i < spritelist.length; i++) {
     if (spritelist[i] !== sprite) {
         if (sprite_collision_with_sprite(sprite, spritelist[i]))
@@ -61,6 +74,28 @@ function sprite_collision_with_spritelist(sprite, spritelist)
     }
   }
   return null;
+}
+
+// align the sprite with angle with the direction its travelling in 
+function align_sprite_angle_with_direction(sprite) {
+  // Calculate the angle of the direction vector
+  sprite.angle = Math.atan2(sprite.vspeed, sprite.hspeed);
+}
+
+//align the sprite to face the point
+function align_sprite_to_face_point(sprite, x, y) {
+  // Calculate angle in radians
+  sprite.angle = Math.atan2(y - sprite.y, x - sprite.x);
+}
+
+// Set a random direction
+function set_sprite_random_direction(sprite) {
+  // Scale speed components based on delta_time
+  let h = Math.random()*2-1;
+  let v = Math.random()*2-1;
+  let vector = normalize_vector(h,v);
+  sprite.hspeed = vector.x * sprite.speed * DELTA_TIME * 10;
+  sprite.vspeed = vector.y * sprite.speed * DELTA_TIME * 10;
 }
 
 //reflect the sprite off the boundary
@@ -83,6 +118,57 @@ function detect_if_sprite_outside_CANVAS(sprite) {
     sprite.y + sprite.height > CANVAS.height
   );
 }
+
+//detect distance between two sprites
+function get_distance_between_sprites(sprite1, sprite2)
+{
+  const dx = sprite2.x - sprite1.x;
+  const dy = sprite2.y - sprite1.y;
+  return Math.sqrt(dx*dx + dy*dy);
+}
+
+function get_direction_vector_to_sprite(sprite, othersprite)
+{
+  const dx = othersprite.x - sprite.x;
+  const dy = othersprite.y - sprite.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  return { x: dx/distance, y: dy/distance }; //returns a vector object vector.x, vector.y
+}
+
+//get the normalised vector e.g a vector with a distance of 1
+function normalize_vector(h,v) {
+  const magnitude = Math.sqrt(h*h + v*v);
+  if (magnitude !== 0) {
+    return {
+      x: h / magnitude,
+      y: v / magnitude
+    };
+  } else {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
+}
+
+function set_direction_of_sprite_to_point(sprite, x, y) {
+  // Calculate direction vector
+  let dx = x - sprite.x;
+  let dy = y - sprite.y;
+
+  // Calculate distance
+  let distance = Math.sqrt(dx*dx + dy*dy);
+
+  // Normalize direction vector
+  let dirX = dx / distance;
+  let dirY = dy / distance;
+
+  // Set sprite's hspeed and vspeed
+  sprite.hspeed = dirX;
+  sprite.vspeed = dirY;
+}
+
+// GRID FUNCTIONS //---------------------------------------
 
 //align the sprite to GRID square
 function align_sprite_to_square(sprite) {
@@ -187,47 +273,6 @@ function get_square_GRID_width()
   return CANVAS.width/GRID[0].length;
 }
 
-//detect distance between two sprites
-function get_distance_between_sprites(sprite1, sprite2)
-{
-  const dx = sprite2.x - sprite1.x;
-  const dy = sprite2.y - sprite1.y;
-  return Math.sqrt(dx*dx + dy*dy);
-}
-
-function get_direction_vector_to_sprite(sprite, othersprite)
-{
-  const dx = othersprite.x - sprite.x;
-  const dy = othersprite.y - sprite.y;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-  return { x: dx/distance, y: dy/distance }; //returns a vector object vector.x, vector.y
-}
-
-//get the normalised vector e.g a vector with a distance of 1
-function normalize_vector(h,v) {
-  const magnitude = Math.sqrt(h*h + v*v);
-  if (magnitude !== 0) {
-    return {
-      x: h / magnitude,
-      y: v / magnitude
-    };
-  } else {
-    return {
-      x: 0,
-      y: 0
-    };
-  }
-}
-
-//removes an item from an array - used for removing sprites from sprite list
-Array.prototype.remove = function(item) {
-  for (var i = this.length - 1; i >= 0; i--) {
-    if (this[i] === item) {
-      this.splice(i, 1);
-    }
-  }
-};
-
 // Draw square
 function draw_square(x,y,width,height)
 {
@@ -238,7 +283,7 @@ function draw_square(x,y,width,height)
 }
 
 // Draw a grid
-function draw_grid()
+function draw_GRID()
 {
   width = get_square_GRID_width()
   height = get_square_GRID_height()
@@ -252,6 +297,8 @@ function draw_grid()
   }
 }
 
+// COMMON EVENTS--------------------------------------
+
 // on mouse down on canvas
 function on_mouse_down(event) {
   for (sprite of SPRITE_LIST) {
@@ -264,6 +311,8 @@ function on_mouse_move(event) {
   for (sprite of SPRITE_LIST) {
     sprite.on_mouse_move(event.offsetX,event.offsetY);
   }
+  MOUSEX = event.offsetX;
+  MOUSEY = event.offsetY;
 }
 
 // on mouse down event on canvas
@@ -281,4 +330,14 @@ function on_key_down(event) {
     sprite.on_key_down(event.keyCode, letter);
   } 
 }
+
+//removes an item from an array - used for removing sprites from sprite list
+Array.prototype.remove = function(item) {
+  for (var i = this.length - 1; i >= 0; i--) {
+    if (this[i] === item) {
+      this.splice(i, 1);
+    }
+  }
+};
+
 

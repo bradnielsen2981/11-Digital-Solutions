@@ -1,29 +1,29 @@
 //create a random sprite
 function create_moving_sprite()
 {
-  if (SPRITE_LIST.length > 10) { 
-    clearInterval(CREATE_SPRITE_TIMER); 
-    return; 
-  }
+  //if (SPRITE_LIST.length > 10) { 
+  //  clearInterval(CREATE_SPRITE_TIMER); 
+  //  return; 
+  //}
 
+  /*
   let posx = Math.random()*CANVAS.width;
-  let posy = Math.random()*CANVAS.height;
-
-  while (true){
+  let posy = Math.random()*CANVAS.height; 
+  while (true) {
     let spritefound = false;
-    for (sprite in SPRITE_LIST){
+    for (sprite in SPRITE_LIST) {
       if (sprite_collision_with_point(sprite, posx, posy)){
         spritefound = true;
       }
     }
-    if (spritefound == false){
+    if (spritefound == false) {
       break;
-    }
+    } 
   }
-
-  mySprite = new Moving_Sprite(posx,posy,100,100,"static/images/pig.png");
-  mySprite.set_random_vector();
-  SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
+  */
+  //mySprite = new Moving_Sprite(posx,posy,100,100,"static/images/pig.png");
+  //set_sprite_random_direction(mySprite);
+  //SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
 }
 
 //game loop - called by itself every animation frame
@@ -70,7 +70,7 @@ function start_game()
   STARTTIME = new Date();
   LAST_FRAME_TIME = STARTTIME;
 
-  CREATE_SPRITE_TIMER = setInterval(create_moving_sprite, 2000);
+  //CREATE_SPRITE_TIMER = setInterval(create_moving_sprite, 2000);
 
   game_loop(); //Start game loop
 }
@@ -79,7 +79,7 @@ function start_game()
 function end_game()
 {
   SPRITE_LIST = [];
-  CANVAS.remove
+  BULLET_LIST = [];
   CANVAS.removeEventListener("mousedown", on_mouse_down);
   CANVAS.removeEventListener("mousemove", on_mouse_move);
   CANVAS.removeEventListener("mouseup", on_mouse_up);
