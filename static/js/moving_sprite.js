@@ -12,7 +12,7 @@ class Moving_Sprite
       this.hspeed = 0;
       this.vspeed = 0;
       this.angle = 0;
-      this.speed = 5;
+      this.speed = 2;
       this.margin = -2;
     }
 
@@ -30,8 +30,8 @@ class Moving_Sprite
     {
       //this.angle = this.angle + 0.05;
 
-      this.x += this.hspeed;
-      this.y += this.vspeed;
+      this.x += this.hspeed*this.speed;
+      this.y += this.vspeed*this.speed;
 
       //check for collision between sprites
       let othersprite = sprite_collision_with_spritelist(this, SPRITE_LIST);
@@ -48,6 +48,7 @@ class Moving_Sprite
     {
       if (sprite_collision_with_point(this, x, y))
       {
+        this.destroy();
         console.log("You clicked me.");
       }
     }
