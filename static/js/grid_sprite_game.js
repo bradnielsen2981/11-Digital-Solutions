@@ -1,4 +1,14 @@
 
+piece = "";
+
+monastry.onclick = function() {
+  piece = monastry;
+  p = new Grid_Sprite(0,0,'static/images/monastry.png',"M");
+  SPRITE_LIST.push(p);
+  GRID[0][0] = "M";
+  console.log(GRID);
+};
+
 
 
 //GAME LOOP----------------------------------------------------------
@@ -39,20 +49,6 @@ EXIT = false;
 GRID = [[0,0,0],
         [0,0,0],
         [0,0,0]];
-
-//Create all the sprites
-
-for (i=0; i<10; i++)
-{
-    let column = Math.floor(Math.random()*GRID[0].length);
-    let row = Math.floor(Math.random()*GRID.length);
-    
-    mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
-    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
-
-    //update GRID
-    GRID[row][column] = 1;
-} 
 
 console.log(GRID);
 
