@@ -10,7 +10,9 @@
       this.height = get_square_GRID_height();
       this.isDragging = false; 
       this.offsetX = 0;
-      this.offsetY = 0; 
+      this.offsetY = 0;
+      SPRITE_LIST.push(this); //add to game sprite list
+      GRID[row][column] = value; 
       this.value = value;
     }
 

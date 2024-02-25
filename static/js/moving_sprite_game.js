@@ -1,12 +1,12 @@
+//SPECIFIC GAME GLOBALS
+
 //create a random sprite
 function create_moving_sprite()
 {
-  //if (SPRITE_LIST.length > 10) { 
-  //  clearInterval(CREATE_SPRITE_TIMER); 
-  //  return; 
-  //}
+  /*if (SPRITE_LIST.length > 10) { 
+    return; 
+  }
 
-  /*
   let posx = Math.random()*CANVAS.width;
   let posy = Math.random()*CANVAS.height; 
   while (true) {
@@ -18,12 +18,14 @@ function create_moving_sprite()
     }
     if (spritefound == false) {
       break;
-    } 
+    } else {
+        let posx = Math.random()*CANVAS.width;
+        let posy = Math.random()*CANVAS.height; 
+    }
   }
-  */
-  //mySprite = new Moving_Sprite(posx,posy,100,100,"static/images/pig.png");
-  //set_sprite_random_direction(mySprite);
-  //SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
+  
+  s = new Moving_Sprite(posx,posy,100,100,"static/images/pig.png");
+  set_sprite_random_direction(s);*/
 }
 
 //game loop - called by itself every animation frame
@@ -71,6 +73,8 @@ function start_game()
   LAST_FRAME_TIME = STARTTIME;
 
   //CREATE_SPRITE_TIMER = setInterval(create_moving_sprite, 2000);
+  pig = new Moving_Sprite(0,0,100,100,"static/images/pig.png");
+  set_sprite_random_direction(pig);
 
   game_loop(); //Start game loop
 }

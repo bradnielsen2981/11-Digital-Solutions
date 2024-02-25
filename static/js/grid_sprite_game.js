@@ -25,35 +25,63 @@ function game_loop(currentTime) {
     requestAnimationFrame(game_loop); //calls itself - known as a recursive function
 }
 
-//SETUP THE GAME -----------------------------------------------------
-CANVAS = document.getElementById("mycanvas");
-CANVAS.focus()
-CTX = CANVAS.getContext("2d");
-CANVAS.addEventListener("mousedown", on_mouse_down); //attach events from globals
-CANVAS.addEventListener("mousemove", on_mouse_move); //attach events from globals
-CANVAS.addEventListener("mouseup", on_mouse_up); //attach events from globals
-CANVAS.addEventListener("keydown", on_key_down); //attach events from globals
 
-TIME = 0
-EXIT = false;
-GRID = [[0,0,0],
-        [0,0,0],
-        [0,0,0]];
+function create_sprites() {
+  //Create all the sprites
+  for (i=0; i<10; i++)
+  {
+      let column = Math.floor(Math.random()*GRID[0].length);
+      let row = Math.floor(Math.random()*GRID.length);
 
-//Create all the sprites
+      while (GRID[row][column] != 0)
+      {
+          column = Math.floor(Math.random()*GRID[0].length);
+          row = Math.floor(Math.random()*GRID.length);
+      }
+      
+      mySprite = new Grid_Sprite(column,row,"static/images/pig.png", 1); //Create a new Sprite
+  } 
+}
 
-for (i=0; i<10; i++)
+
+
+// Start the game, add eventlisteners
+function start_game()
 {
-    let column = Math.floor(Math.random()*GRID[0].length);
-    let row = Math.floor(Math.random()*GRID.length);
-    
-    mySprite = new Grid_Sprite(column,row,"static/images/pig.png",1); //Create a new Sprite
-    SPRITE_LIST.push(mySprite); //Add the new Sprite to the SpriteList.
+  CANVAS= document.getElementById("mycanvas");
+  CANVAS.focus()
+  CTX = CANVAS.getContext("2d");
+  CANVAS.addEventListener("mousedown", on_mouse_down);
+  CANVAS.addEventListener("mousemove", on_mouse_move);
+  CANVAS.addEventListener("mouseup", on_mouse_up);
+  CANVAS.addEventListener("keydown", on_key_down);
 
-    //update GRID
-    GRID[row][column] = 1;
-} 
+  STARTTIME = new Date();
+  LAST_FRAME_TIME = STARTTIME;
 
-console.log(GRID);
+  GRID = [[0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0]];
 
-game_loop(); //Start game loop
+  //CREATE_SPRITE_TIMER = setInterval(create_moving_sprite, 2000);
+  create_sprites();
+
+  game_loop(); //Start game loop
+}
+
+//end the game, clear the sprite list, remove the event listeners
+function end_game()
+{
+  SPRITE_LIST = [];
+  BULLET_LIST = [];
+  CANVAS.removeEventListener("mousedown", on_mouse_down);
+  CANVAS.removeEventListener("mousemove", on_mouse_move);
+  CANVAS.removeEventListener("mouseup", on_mouse_up);
+  CANVAS.removeEventListener("keydown", on_key_down);
+
+  //could move to another page
+  //window.location.href = "menu.html";
+}
+
+start_game();

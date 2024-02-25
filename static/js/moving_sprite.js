@@ -13,7 +13,8 @@ class Moving_Sprite
       this.vspeed = 0;
       this.angle = 0;
       this.speed = 2;
-      this.margin = -2;
+      this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
+      SPRITE_LIST.push(this); //add to game sprite list
     }
 
     //draw the image - called every frame and rotate
