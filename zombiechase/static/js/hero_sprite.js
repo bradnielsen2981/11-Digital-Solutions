@@ -12,7 +12,7 @@ class Hero_Sprite
       this.hspeed = 0;
       this.vspeed = 0;
       this.angle = 0;
-      this.speed = 2;
+      this.speed = 5;
       this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
       GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
@@ -38,7 +38,7 @@ class Hero_Sprite
       let othersprite = GAME.sprite_collision_with_spritelist(this, GAME.SPRITE_LIST);
       if (othersprite != null)
       {
-        console.log("Collision between sprites was detected.")
+        
         //GAME.SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
         //GAME.SPRITELIST.remove(othersprite);
       }
@@ -53,8 +53,6 @@ class Hero_Sprite
     //on mouse move
     on_mouse_move(x,y) //on moving the mouse
     {
-      this.x = GAME.MOUSEX - this.width/2;
-      this.y = GAME.MOUSEY - this.height/2; 
     }
 
     //on mouse up
@@ -74,7 +72,18 @@ class Hero_Sprite
       else {
         if (letter == 'A') //if letter was used
         { 
-          console.log("a was pressed");
+          this.x -= this.speed;
+        } else if (letter == 'D')
+        {
+          this.x += this.speed;
+        }
+
+        if (letter == 'W') //if letter was used
+        { 
+          this.y -= this.speed;
+        } else if (letter == 'S')
+        {
+          this.y += this.speed;
         }
       } 
     }

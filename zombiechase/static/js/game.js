@@ -72,7 +72,6 @@ class Game
       if (spritelist[i] !== sprite1) {
           if (this.sprite_collision_with_sprite(sprite1, spritelist[i]))
           {
-            console.log(spritelist[i])
             return spritelist[i];
           }
       }

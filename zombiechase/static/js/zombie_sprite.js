@@ -12,7 +12,7 @@ class Zombie_Sprite
       this.hspeed = 0;
       this.vspeed = 0;
       this.angle = 0;
-      this.speed = 2;
+      this.speed = 1;
       this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
       GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
@@ -30,15 +30,17 @@ class Zombie_Sprite
     update()
     {
       //this.angle = this.angle + 0.05;
+      if (HERO)
+      {
+        let vec = GAME.get_direction_vector_to_sprite(this, HERO);
+        this.hspeed = vec.x;
+        this.vspeed = vec.y;
+      }
 
       this.x += this.hspeed*this.speed;
       this.y += this.vspeed*this.speed;
       
       GAME.reflect_sprite_off_boundary(this, GAME.CANVAS);
-      if (this.speed < 10)
-      {
-        this.speed = this.speed + 1;
-      }
     }
 
     //on mouse down
@@ -75,7 +77,7 @@ class Zombie_Sprite
       else {
         if (letter == 'A') //if letter was used
         { 
-          console.log("a was pressed");
+          
         }
       } 
     }

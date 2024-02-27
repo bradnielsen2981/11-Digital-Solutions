@@ -24,7 +24,7 @@ function create_moving_sprite()
     }
   }
   
-  zombie = new Zombie_Sprite(posx,posy,100,100,"static/images/zombie.png");
+  let zombie = new Zombie_Sprite(posx,posy,100,100,"static/images/zombie2.png");
 }
 
 // Called every frame
@@ -37,7 +37,7 @@ function update_game()
 function start_game()
 {
   CREATE_SPRITE_TIMER = setInterval(create_moving_sprite, 1000);
-  hero = new Hero_sprite(400,400,50,50,"static/images/hero.gif");
+  HERO = new Hero_Sprite(400,400,100,100,"static/images/hero2.png");
 }
 
 // End the game
