@@ -1,6 +1,6 @@
 // A CLASS is a variable type that contains OTHER variables and functions.
 // WHEN IT IS CREATED, ITS CALLED AN OBJECT!!!)
-class Moving_Sprite
+class Crosshair_Sprite
 {
     constructor(x, y, width, height, image) { //a constructor is the function called when the OBJECT is created
       this.x = x;
@@ -14,16 +14,16 @@ class Moving_Sprite
       this.angle = 0;
       this.speed = 2;
       this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
-      SPRITE_LIST.push(this); //add to game sprite list
+      GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
 
     //draw the image - called every frame and rotate
     draw() {
-      CTX.save(); // Save the current transformation matrix
-      CTX.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the sprite
-      CTX.rotate(this.angle); // Rotate by the current angle
-      CTX.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the image centered at (0, 0)
-      CTX.restore(); // Restore the previous transformation matrix
+      GAME.CTX.save(); // Save the current transformation matrix
+      GAME.CTX.translate(this.x + this.width / 2, this.y + this.height / 2); // Translate to the center of the sprite
+      GAME.CTX.rotate(this.angle); // Rotate by the current angle
+      GAME.CTX.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height); // Draw the image centered at (0, 0)
+      GAME.CTX.restore(); // Restore the previous transformation matrix
     }
 
     //do any logic - called every frame
@@ -33,42 +33,35 @@ class Moving_Sprite
 
       this.x += this.hspeed*this.speed;
       this.y += this.vspeed*this.speed;
-
+      
       //check for collision between sprites
-      let othersprite = sprite_collision_with_spritelist(this, SPRITE_LIST);
+      let othersprite = GAME.sprite_collision_with_spritelist(this, GAME.SPRITE_LIST);
       if (othersprite != null)
       {
         console.log("Collision between sprites was detected.")
-        //SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
-        //SPRITELIST.remove(othersprite);
+        //GAME.SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
+        //GAME.SPRITELIST.remove(othersprite);
       }
     }
 
     //on mouse down
     on_mouse_down(x,y) //on mouse down
     {
-      if (sprite_collision_with_point(this, x, y))
-      {
-        this.destroy();
-        console.log("You clicked me.");
-      }
+
     }
 
     //on mouse move
     on_mouse_move(x,y) //on moving the mouse
     {
-      if (sprite_collision_with_point(this, x, y)) //if mouse moves over sprite
-      {
-        console.log("You hovered over me.");
-      }
+      this.x = GAME.MOUSEX - this.width/2;
+      this.y = GAME.MOUSEY - this.height/2; 
     }
 
     //on mouse up
     on_mouse_up(x,y)
     {
-      if (sprite_collision_with_point(this, x, y))  //if mouse up on sprite
+      if (GAME.sprite_collision_with_point(this, x, y))  //if mouse up on sprite
       {         
-        console.log("You released mouse on me.");
       }
     }
 
@@ -88,7 +81,7 @@ class Moving_Sprite
 
     destroy()
     {
-      SPRITE_LIST.remove(this);
+      GAME.SPRITE_LIST.remove(this);
       //this = null; //why does this not work??
     }
 }
