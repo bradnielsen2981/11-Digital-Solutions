@@ -72,6 +72,7 @@ class Game
       if (spritelist[i] !== sprite1) {
           if (this.sprite_collision_with_sprite(sprite1, spritelist[i]))
           {
+            console.log(spritelist[i])
             return spritelist[i];
           }
       }
@@ -225,7 +226,7 @@ class Game
   }
 
   //move sprite to square
-  move_sprite_to_square(column, row, sprite) {
+  move_sprite_to_square(column, row, sprite1) {
     // Calculate the size of a this.GRID square
     const squareWidth = this.CANVAS.width / this.GRID[0].length;
     const squareHeight = this.CANVAS.height / this.GRID.length;
@@ -235,8 +236,8 @@ class Game
     const y = row*squareHeight;
 
     // Set the sprite position
-    sprite.x = x;
-    sprite.y = y;
+    sprite1.x = x;
+    sprite1.y = y;
   }
 
   //is the sprite in the centre of a square
@@ -289,14 +290,14 @@ class Game
   // Draw a grid
   draw_GRID()
   {
-    width = get_square_GRID_width()
-    height = get_square_GRID_height()
+    let width = this.get_square_GRID_width()
+    let height = this.get_square_GRID_height()
 
-    for (row=0; row < this.GRID.length; row++)  
+    for (let row=0; row < this.GRID.length; row++)  
     {
-      for (col=0; col < this.GRID[row].length; col++)
+      for (let col=0; col < this.GRID[row].length; col++)
       { 
-          draw_square(col,row,width,height); //draws a black square
+          this.draw_square(col,row,width,height); //draws a black square
       }
     }
   }

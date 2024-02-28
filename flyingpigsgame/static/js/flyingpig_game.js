@@ -49,6 +49,6 @@ function end_game()
   //window.location.href = "menu.html";
 }
 
-GAME = new Game()
-GAME_CONTROLLER = new Game_Controller()
+GAME = new Game() //GAME ENGINER
+GAME_CONTROLLER = new Game_Controller() //GAME ENGINE
 GAME_CONTROLLER.start()
