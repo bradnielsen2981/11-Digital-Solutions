@@ -18,6 +18,7 @@ class Game_Controller
       GAME.CANVAS.addEventListener("mousemove", this.on_mouse_move);
       GAME.CANVAS.addEventListener("mouseup", this.on_mouse_up);
       GAME.CANVAS.addEventListener("keydown", this.on_key_down);
+      GAME.CANVAS.addEventListener("keyup", this.on_key_up);
       GAME.STARTTIME = new Date();
       GAME.LAST_FRAME_TIME = GAME.STARTTIME;
       window['start_game'](); //call the start_game function
@@ -79,7 +80,9 @@ class Game_Controller
     if (GAME.SPRITE_LIST)
     { 
       for (let sprite of GAME.SPRITE_LIST) {
-        sprite.on_mouse_down(event.offsetX,event.offsetY);
+        if (typeof sprite.on_mouse_down === 'function') {
+          sprite.on_mouse_down(event.offsetX,event.offsetY);
+        }
       }
     }
   }
@@ -89,7 +92,9 @@ class Game_Controller
     if (GAME.SPRITE_LIST)
     { 
       for (let sprite of GAME.SPRITE_LIST) {
-        sprite.on_mouse_move(event.offsetX,event.offsetY);
+        if (typeof sprite.on_mouse_move === 'function') {
+          sprite.on_mouse_move(event.offsetX,event.offsetY);
+        }
       }
     }
     GAME.MOUSEX = event.offsetX;
@@ -101,20 +106,36 @@ class Game_Controller
     if (GAME.SPRITE_LIST)
     { 
       for (let sprite of GAME.SPRITE_LIST) {
-        sprite.on_mouse_up(event.offsetX,event.offsetY);
+        if (typeof sprite.on_mouse_up === 'function') {
+          sprite.on_mouse_up(event.offsetX,event.offsetY);
+        }
       }
     }
   }
 
   // on key down event during game
   on_key_down(event) {
+    let letter = String.fromCharCode(event.keyCode);
+    GAME.KEYS_PRESSED[letter] = true;
     if (GAME.SPRITE_LIST)
     { 
       for (let sprite of GAME.SPRITE_LIST) {
-        let letter = String.fromCharCode(event.keyCode);
-        sprite.on_key_down(event.keyCode, letter);
+        if (typeof sprite.on_key_down === 'function') {
+          sprite.on_key_down(event.keyCode, letter, GAME.KEYS_PRESSED);
+        }
       } 
     }
+  }
+
+  //on key up
+  on_key_up(event) {
+    let letter = String.fromCharCode(event.keyCode);
+    for (let sprite of GAME.SPRITE_LIST) {
+      if (typeof sprite.on_key_up === 'function') {
+        sprite.on_key_up(event.keyCode, letter);
+      }
+    }
+    delete GAME.KEYS_PRESSED[letter];
   }
 
 }

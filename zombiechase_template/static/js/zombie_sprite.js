@@ -69,17 +69,14 @@ class Zombie_Sprite
     }
 
     //on key down
-    on_key_down(keycode, letter) //on key down
+    on_key_down(keycode, letter, keyspressed) //on key down
     {
-      if (keycode == 32) { //key code for special keys
-        console.log("Space was pressed");
-      }
-      else {
-        if (letter == 'A') //if letter was used
-        { 
-          
-        }
-      } 
+      
+    }
+
+    on_key_up(keycode, letter)
+    {
+      
     }
 
     destroy()

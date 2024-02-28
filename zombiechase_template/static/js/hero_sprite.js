@@ -64,29 +64,37 @@ class Hero_Sprite
     }
 
     //on key down
-    on_key_down(keycode, letter) //on key down
+    on_key_down(keycode, letter, keyspressed) //on key down
     {
-      if (keycode == 32) { //key code for special keys
+      console.log(keyspressed);
+      // Process keys that are currently pressed
+      if (keyspressed[' ']) {
         console.log("Space was pressed");
-      }
-      else {
-        if (letter == 'A') //if letter was used
-        { 
-          this.x -= this.speed;
-        } else if (letter == 'D')
+      } else {
+        if (keyspressed['A'])
         {
-          this.x += this.speed;
+            this.x -= this.speed;
+        }
+        if (keyspressed['D'])
+        {
+            this.x += this.speed;
         }
 
-        if (letter == 'W') //if letter was used
-        { 
-          this.y -= this.speed;
-        } else if (letter == 'S')
+        if (keyspressed['W'])
         {
-          this.y += this.speed;
+            this.y -= this.speed;
         }
-      } 
+        if (keyspressed['S'])
+        {
+            this.y += this.speed;
+        }
+      }
     }
+
+    on_key_up(keycode, letter) //on key up    {
+    {
+
+    }    
 
     destroy()
     {

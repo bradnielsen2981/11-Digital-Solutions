@@ -19,6 +19,7 @@ class Game
     this.TURN = 1;
     this.MOUSEX = 0;
     this.MOUSEY = 0;
+    this.KEYS_PRESSED = {};
   }
 
   //GLOBAL GAME FUNCTIONS--------------------------------------------
@@ -72,7 +73,6 @@ class Game
       if (spritelist[i] !== sprite1) {
           if (this.sprite_collision_with_sprite(sprite1, spritelist[i]))
           {
-            console.log(spritelist[i])
             return spritelist[i];
           }
       }

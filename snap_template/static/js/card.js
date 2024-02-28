@@ -1,19 +1,14 @@
 // A CLASS is a variable type that contains OTHER variables and functions.
 // WHEN IT IS CREATED, ITS CALLED AN OBJECT!!!)
-class FlyingPig_Sprite
+class Card
 {
-    constructor(x, y, width, height, image) { //a constructor is the function called when the OBJECT is created
+    constructor(x, y, width, height, card, cardback) { //a constructor is the function called when the OBJECT is created
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
       this.image = new Image();
-      this.image.src = image;
-      this.hspeed = 0;
-      this.vspeed = 0;
-      this.angle = 0;
-      this.speed = 2;
-      this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
+      this.image.src = cardback;
       GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
 
@@ -29,41 +24,25 @@ class FlyingPig_Sprite
     //do any logic - called every frame
     update()
     {
-      //this.angle = this.angle + 0.05;
-
-      this.x += this.hspeed*this.speed;
-      this.y += this.vspeed*this.speed;
       
-      GAME.reflect_sprite_off_boundary(this, GAME.CANVAS);
-      if (this.speed < 10)
-      {
-        this.speed = this.speed + 1;
-      }
     }
 
     //on mouse down
     on_mouse_down(x,y) //on mouse down
     {
-      if (GAME.sprite_collision_with_point(this, x, y))
-      {
-        this.destroy();
-      }
+
     }
 
     //on mouse move
     on_mouse_move(x,y) //on moving the mouse
     {
-      if (GAME.sprite_collision_with_point(this, x, y)) //if mouse moves over sprite
-      {
-      }
+
     }
 
     //on mouse up
     on_mouse_up(x,y)
     {
-      if (GAME.sprite_collision_with_point(this, x, y))  //if mouse up on sprite
-      {         
-      }
+ 
     }
 
     //on key down

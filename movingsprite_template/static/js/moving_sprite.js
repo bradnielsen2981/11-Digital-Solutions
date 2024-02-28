@@ -15,7 +15,6 @@ class Moving_Sprite
       this.speed = 2;
       this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
       GAME.SPRITE_LIST.push(this); //add to game sprite list
-      console.log(GAME.SPRITE_LIST);
     }
 
     //draw the image - called every frame and rotate
@@ -77,18 +76,15 @@ class Moving_Sprite
     }
 
     //on key down
-    on_key_down(keycode, letter) //on key down
+    on_key_down(keycode, letter, keyspressed) //on key down
     {
-      if (keycode == 32) { //key code for special keys
-        console.log("Space was pressed");
-      }
-      else {
-        if (letter == 'A') //if letter was used
-        { 
-          console.log("a was pressed");
-        }
-      } 
+
     }
+
+    on_key_up(keycode, letter) //on key up    {
+    {
+
+    }    
 
     destroy()
     {

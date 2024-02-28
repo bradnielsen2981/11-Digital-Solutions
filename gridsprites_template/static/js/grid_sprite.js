@@ -78,18 +78,15 @@
     }
 
     //on key down
-    on_key_down(keycode, letter) //on key down
+    on_key_down(keycode, letter, keyspressed) //on key down
     {
-      if (keycode == 32) { //key code for special keys
-        console.log("Space was pressed");
-      }
-      else {
-        if (letter == 'A') //if letter was used
-        { 
-          console.log("a was pressed");
-        }
-      } 
+
     }
+
+    on_key_up(keycode, letter) //on key up    {
+    {
+
+    }    
 
     //destroy the sprite
     die()
