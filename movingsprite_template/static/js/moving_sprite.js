@@ -9,8 +9,8 @@ class Moving_Sprite
       this.height = height;
       this.image = new Image();
       this.image.src = image;
-      this.hspeed = 0;
-      this.vspeed = 0;
+      this.hspeed = 1;
+      this.vspeed = 0.8;
       this.angle = 0;
       this.speed = 2;
       this.margin = -2; //the margin for detecting collision - collision mask has not yet been implemented
@@ -30,7 +30,7 @@ class Moving_Sprite
     //do any logic - called every frame
     update()
     {
-      //this.angle = this.angle + 0.05;
+      this.angle = this.angle + 0.05;
 
       this.x += this.hspeed*this.speed;
       this.y += this.vspeed*this.speed;
@@ -43,6 +43,8 @@ class Moving_Sprite
         //GAME.SPRITELIST.remove(this); //remove the sprite from the list of sprites being drawn, rendered
         //GAME.SPRITELIST.remove(othersprite);
       }
+
+      GAME.reflect_sprite_off_boundary(this, GAME.CANVAS);
     }
 
     //on mouse down

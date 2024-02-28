@@ -1,0 +1,17 @@
+canvas { border:1px solid black; 
+    background-image:url("../images/sky.jpg"); 
+    background-size:cover;
+}
+
+.pieces
+ {
+    float:left; 
+    margin-left:20px; margin-right: 20px;
+    width:100px;
+ }
+
+ .pieces img
+ {
+    float:left;
+    margin-bottom:20px;
+ }
