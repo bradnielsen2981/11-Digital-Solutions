@@ -2,13 +2,17 @@
 // WHEN IT IS CREATED, ITS CALLED AN OBJECT!!!)
 class Card
 {
-    constructor(x, y, width, height, card, cardback) { //a constructor is the function called when the OBJECT is created
+    constructor(x, y, width, height, cardimage, cardbackimage, suit, cardtype) { //a constructor is the function called when the OBJECT is created
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
       this.image = new Image();
-      this.image.src = cardback;
+      this.image.src = cardbackimage;
+      this.cardimage = cardimage;
+      this.cardbackimage = cardbackimage;
+      this.suit = suit;
+      this.cardtype = cardtype;
       GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
 
@@ -21,40 +25,11 @@ class Card
       GAME.CTX.restore(); // Restore the previous transformation matrix
     }
 
-    //do any logic - called every frame
-    update()
+    flip()
     {
-      
+      this.image.src = cardback;      
     }
-
-    //on mouse down
-    on_mouse_down(x,y) //on mouse down
-    {
-
-    }
-
-    //on mouse move
-    on_mouse_move(x,y) //on moving the mouse
-    {
-
-    }
-
-    //on mouse up
-    on_mouse_up(x,y)
-    {
- 
-    }
-
-    //on key down
-    on_key_down(keycode, letter, keyspressed) //on key down
-    {
-
-    }
-
-    on_key_up(keycode, letter) //on key up    {
-    {
-
-    }    
+  
 
     destroy()
     {
