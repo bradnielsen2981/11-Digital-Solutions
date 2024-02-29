@@ -1,8 +1,16 @@
 //SPECIFIC GAME GLOBALS
+//playerhand = []; //FOR BLACKJACK
+SNAP_OPPORTUNITY = false;
+cardlist = [];
+
 
 //create a random sprite
-function create_card()
+function create_cards()
 {
+  cardlist = [];
+  SNAP_OPPORTUNITY = false;
+  GAME.clear_sprites();
+
   // Generate a random suit
   let suits = ['heart', 'club', 'spade', 'diamond'];
 
@@ -14,7 +22,17 @@ function create_card()
 
     let cardimage = "static/images/" + String(randomNumber) + randomSuit + ".gif";
 
-    card = new Card(100, i*250, 204, 294, cardimage, cardimage, randomSuit, randomNumber);
+    let card = new Card(i*200, 100, 204, 294, cardimage, cardimage, randomSuit, randomNumber);
+
+    cardlist.push(card);
+  }
+
+  if (cardlist[0].suit == cardlist[1].suit)
+  {
+    console.log("Snap opportunity");
+    SNAP_OPPORTUNITY = true;
+  } else {
+    SNAP_OPPORTUNITY = false;
   }
 
 }
@@ -22,13 +40,22 @@ function create_card()
 // Called every frame
 function update_game()
 {
-
+    if (SNAP_OPPORTUNITY == true)
+    {
+       console.log("SNAP OPPORTUNITY");
+       if (GAME.KEYS_PRESSED['W'])
+       {
+         alert("SNAP");
+         SNAP_OPPORTUNITY = false;
+         GAME.KEYS_PRESSED = {};
+       }
+    }
 }
 
 // Start the game
 function start_game()
 {
-  CREATE_SPRITE_TIMER = setInterval(create_card, 2000);
+  CREATE_SPRITE_TIMER = setInterval(create_cards, 2000);
 }
 
 // End the game

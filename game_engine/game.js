@@ -302,7 +302,14 @@ class Game
     }
   }
 
+clear_sprites()
+{
+  this.SPRITE_LIST = [];
+}
+
+
 } //close game engine
+
 
 //removes an item from an array - used for removing sprites from sprite list
 Array.prototype.remove = function(item) {
