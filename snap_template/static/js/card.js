@@ -2,17 +2,17 @@
 // WHEN IT IS CREATED, ITS CALLED AN OBJECT!!!)
 class Card
 {
-    constructor(x, y, width, height, cardimage, cardbackimage, suit, cardtype) { //a constructor is the function called when the OBJECT is created
+    constructor(x, y, width, height, cardimage, cardbackimage, suit, cardnumber) { //a constructor is the function called when the OBJECT is created
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
       this.image = new Image();
-      this.image.src = cardbackimage;
+      this.image.src = cardimage;
       this.cardimage = cardimage;
       this.cardbackimage = cardbackimage;
       this.suit = suit;
-      this.cardtype = cardtype;
+      this.cardnumber = cardnumber;
       GAME.SPRITE_LIST.push(this); //add to game sprite list
     }
 
@@ -28,6 +28,11 @@ class Card
     flip()
     {
       this.image.src = cardback;      
+    }
+
+    update()
+    {
+      
     }
   
 
