@@ -1,18 +1,34 @@
 piece = "";
 
-tile1.onclick = function() {
+p1tile1.onclick = function() {
   piece = new Grid_Sprite(0,0,'static/images/tile1.png',"village");
 };
 
-tile2.onclick = function() {
+p1tile2.onclick = function() {
   piece = new Grid_Sprite(0,0,'static/images/tile2.png',"monastery");
 };
 
-tile3.onclick = function() {
+p1tile3.onclick = function() {
   piece = new Grid_Sprite(0,0,'static/images/tile3.png',"road");
 };
 
-tile4.onclick = function() {
+p1tile4.onclick = function() {
+  piece = new Grid_Sprite(0,0,'static/images/tile4.png',"church");
+};
+
+p2tile1.onclick = function() {
+  piece = new Grid_Sprite(0,0,'static/images/tile1.png',"village");
+};
+
+p2tile2.onclick = function() {
+  piece = new Grid_Sprite(0,0,'static/images/tile2.png',"monastery");
+};
+
+p2tile3.onclick = function() {
+  piece = new Grid_Sprite(0,0,'static/images/tile3.png',"road");
+};
+
+p2tile4.onclick = function() {
   piece = new Grid_Sprite(0,0,'static/images/tile4.png',"church");
 };
 
