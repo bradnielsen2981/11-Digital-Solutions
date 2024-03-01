@@ -36,12 +36,16 @@ class Game_Controller
         //update sprites
         for (let sprite of GAME.SPRITE_LIST)
         {
-          sprite.update(); //run any sprite logic
+          if (typeof sprite.update === 'function') {
+            sprite.update(); //run any sprite logic
+          }
         }
         //draw all sprites 
         for (let sprite of GAME.SPRITE_LIST) 
         {
-          sprite.draw();
+          if (typeof sprite.draw === 'function') {
+            sprite.draw();
+          }
         }
       }
       window['update_game'](); //called the update_game function

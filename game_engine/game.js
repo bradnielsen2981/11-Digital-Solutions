@@ -112,6 +112,16 @@ class Game
     }
   }
 
+  // Reflect the sprite off the boundary (sprite2)
+  reflect_sprite_off_sprite(sprite1, sprite2) {
+  if (sprite1.x < sprite2.x || sprite1.x + sprite1.width > sprite2.x + sprite2.width) {
+    sprite1.hspeed *= -1; // Reverse hspeed if outside horizontally
+  }
+  if (sprite1.y < sprite2.y || sprite1.y + sprite1.height > sprite2.y + sprite2.height) {
+    sprite1.vspeed *= -1; // Reverse vspeed if outside vertically
+  }
+}
+
   // Check if any part of the sprite is outside the this.CANVAS boundaries
   detect_if_sprite_outside_CANVAS(sprite1) {
     
