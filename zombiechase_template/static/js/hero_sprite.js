@@ -71,7 +71,7 @@ class Hero_Sprite
       if (keyspressed[' ']) {
         console.log("Space was pressed");
 
-        let bullet = new Ball_Sprite(this.x,this.y,10,10,"static/images/ball.png");
+        let bullet = new Ball_Sprite(this.x + this.width/2, this.y + this.width/2,10,10,"static/images/ball.png");
         GAME.set_direction_of_sprite_to_point(bullet,GAME.MOUSEX,GAME.MOUSEY)
 
       } else {

@@ -21,8 +21,9 @@ function create_cards()
     let randomNumber = Math.floor(Math.random() * 13) + 1;
 
     let cardimage = "static/images/" + String(randomNumber) + randomSuit + ".gif";
+    let cardback = "static/images/cardback.png";
 
-    let card = new Card(i*200, 100, 204, 294, cardimage, cardimage, randomSuit, randomNumber);
+    let card = new Card(i*200, 100, 204, 294, cardimage, cardback, randomSuit, randomNumber);
 
     cardlist.push(card);
   }
